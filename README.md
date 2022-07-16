@@ -8,12 +8,14 @@
 * InfluxDB:          2.1.1
 * Telegraf (StatsD): 1.21
 * Postgres:          14.2.0
-* Grafana:           8.4.4
+* Grafana:           8.4.3
 
 
-## How to Start
+## Pre-requisites
 
 First download and install the latest available version of Docker Compose <https://docs.docker.com/compose/install/>
+
+## How to Start
 
 In order to start the service the first time launch:
 
