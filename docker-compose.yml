@@ -25,7 +25,7 @@ services:
       - NET_RAW
     volumes:
       - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
-      #- ./suricata/log:/var/log/suricata
+      - ./suricata/log:/var/log/suricata
       #- ./suricata/lib:/var/lib/suricata
 
   influxdb:
