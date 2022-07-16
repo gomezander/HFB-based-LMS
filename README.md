@@ -11,9 +11,11 @@
 * Grafana:           8.4.4
 
 
-## How to Start
+## Pre-requisites
 
 First download and install the latest available version of Docker Compose <https://docs.docker.com/compose/install/>
+
+## How to Start
 
 In order to start the service the first time launch:
 
