@@ -12,6 +12,22 @@ networks:
     external: false
 
 services:
+  suricata:
+    image: jasonish/suricata:latest
+    container_name: suricata
+    restart: always
+    env_file:
+      - './suricata/env.suricata'
+    network_mode: "host"
+    cap_add: 
+      - NET_ADMIN
+      - SYS_NICE
+      - NET_RAW
+    volumes:
+      - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
+      #- ./suricata/log:/var/log/suricata
+      #- ./suricata/lib:/var/lib/suricata
+
   influxdb:
     container_name: dsig-influx
     image: influxdb:${INFLUXDB_VERSION}
