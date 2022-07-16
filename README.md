@@ -1,4 +1,4 @@
-# Docker service with Telegraf (StatsD), InfluxDB and Grafana
+# Service with Suricata, Telegraf, InfluxDB and Grafana
 
 ## Versions
 
