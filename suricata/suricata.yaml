@@ -1900,7 +1900,11 @@ napatech:
 default-rule-path: /var/lib/suricata/rules
 
 rule-files:
-  - suricata.rules
+  - emerging-exploit.rules
+  - my-rules
+
+#rule-files:
+#  - suricata.rules
 
 ##
 ## Auxiliary configuration files.

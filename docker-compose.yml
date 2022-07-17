@@ -26,7 +26,7 @@ services:
     volumes:
       - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
       - ./suricata/log:/var/log/suricata
-      #- ./suricata/lib:/var/lib/suricata
+      - ./suricata/rules:/var/lib/suricata/rules
 
   influxdb:
     container_name: dsig-influx

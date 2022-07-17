@@ -12,8 +12,35 @@
 
 
 ## Pre-requisites
+- Download and install the latest available version of [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- Download and install the latest available version of [Docker Compose](https://docs.docker.com/compose/install/)
+- Configure [Docker as non root](https://docs.docker.com/engine/install/linux-postinstall/)
 
-First download and install the latest available version of Docker Compose <https://docs.docker.com/compose/install/>
+## Getting Started
+
+### Configure suricata
+
+*The following settings have already been made, so they should be followed in case new rules are added or updated.*
+
+1. Download rules from the community:
+
+    ```bash
+    wget http://rules.emergingthreats.net/open/suricata/emerging.rules.tar.gz
+    ```
+
+2. Unzip the rules
+
+    ```bash
+    tar zxvf emerging.rules.tar.gz
+    ```
+
+3. Move `~/rules` folder to `~/composer-suri-tele-infl-graf/suricata/`
+
+    ```bash
+    sudo mv rules /var/lib/suricata/
+    ```
+
+4. Configure `docker-compose.yaml` file
 
 ## How to Start
 
