@@ -71,7 +71,7 @@
 
 ### Mapped Ports
 
-    ```bash
+    ```
     Host		Container		Service
 
     3000		3000			grafana
@@ -83,7 +83,7 @@
 
 Open <http://localhost:3000>
 
-    ```bash
+    ```
     Username: admin
     Password: admin
     ```
@@ -98,7 +98,7 @@ InfluxDB data source is automatically provisioned with new Flux language support
 
     Open <http://localhost:8086>
 
-    ```bash
+    ```
     Username: admin
     Password: admin123456
     Port: 8086
