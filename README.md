@@ -2,14 +2,11 @@
 
 ## Versions
 
-### Warning: UPGRADE FROM OLDER VERSIONS TO VERSION 3.0.0 IS NOT POSSIBLE, SEE CHANGELOG.MD
-
-* Main version:      3.0.0
+* Suricata:          ???
 * InfluxDB:          2.1.1
 * Telegraf (StatsD): 1.21
 * Postgres:          14.2.0
 * Grafana:           8.4.3
-
 
 ## Pre-requisites
 - Download and install the latest available version of [Docker](https://docs.docker.com/engine/install/ubuntu/)
@@ -40,7 +37,37 @@
     sudo mv rules /var/lib/suricata/
     ```
 
-4. Configure `docker-compose.yaml` file
+4. Configure `docker-compose.yaml` file, adding next line as volume:
+
+    ```bash
+      - ./suricata/rules:/var/lib/suricata/rules
+    ```
+
+5. Create `my-rules` file:
+
+    ```bash
+      - vim ~/composer-suri-tele-infl-graf/suricata/rules/my-rules
+    ```
+
+6. Add next rules:
+
+    1. Ping detection
+    
+        ```bash
+          alert icmp any any -> $HOME_NET any (msg:"ICMP connection attempt"; sid:1000002; rev:1;)
+        ```
+
+    2. SSH connections detection
+    
+        ```bash
+          alert tcp any any -> $HOME_NET 22 (msg:"SSH connection attempt"; sid:1000003; rev:1;)
+        ```
+
+    3. Detects excessive packet forwarding to port 80 
+    
+        ```bash
+          alert tcp any any -> $HOME_NET 80 (msg:"DDoS Unusually fast port 80 SYN packets outbound, Potential DDoS"; flags: S,12; threshold: type both, track by_dst, count 500, seconds 5; classtype:misc-activity; sid:6;)
+        ```
 
 ### Mapped Ports
 
