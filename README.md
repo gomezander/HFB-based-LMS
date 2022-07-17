@@ -69,6 +69,24 @@
           alert tcp any any -> $HOME_NET 80 (msg:"DDoS Unusually fast port 80 SYN packets outbound, Potential DDoS"; flags: S,12; threshold: type both, track by_dst, count 500, seconds 5; classtype:misc-activity; sid:6;)
         ```
 
+7. Edit suricata configuration file:
+
+    ```bash
+    sudo vim ~/composer-suri-tele-infl-graf/suricata/suricata.yaml
+    ```
+
+8. Modify `default-rule-path` adding `path`, `community rules` and `personal rules`:
+
+    ```bash
+    default-rule-path: /var/lib/suricata/rules
+
+    rule-files:
+  
+        - emerging-exploit.rules
+  
+        - my-rules
+    ```
+
 ### Mapped Ports
 
 ```
