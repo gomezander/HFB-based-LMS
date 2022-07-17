@@ -71,22 +71,21 @@
 
 ### Mapped Ports
 
-    ```
-    Host		Container		Service
-
-    3000		3000			grafana
-    8086		8086		  	influxdb
-    8125		8125			statsd
-    ```
+```
+Host		Container		Service
+3000		3000			grafana
+8086		8086		  	influxdb
+8125		8125			statsd
+```
 
 ### Grafana
 
 Open <http://localhost:3000>
 
-    ```
-    Username: admin
-    Password: admin
-    ```
+```
+Username: admin
+Password: admin
+```
 
 #### Data source on Grafana
 
@@ -96,13 +95,13 @@ InfluxDB data source is automatically provisioned with new Flux language support
 
 #### Web Interface
 
-    Open <http://localhost:8086>
+Open <http://localhost:8086>
 
-    ```
-    Username: admin
-    Password: admin123456
-    Port: 8086
-    ```
+```
+Username: admin
+Password: admin123456
+Port: 8086
+```
 
 ### Customizations
 
