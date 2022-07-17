@@ -67,12 +67,12 @@ stats:
   # which stats are updated in the log.
   interval: 8
   # Add decode events to stats.
-  #decoder-events: true
+  # decoder-events: true
   # Decoder event prefix in stats. Has been 'decoder' before, but that leads
   # to missing events in the eve.stats records. See issue #2225.
-  #decoder-events-prefix: "decoder.event"
+  # decoder-events-prefix: "decoder.event"
   # Add stream events as stats.
-  #stream-events: false
+  stream-events: false
 
 # Configure the type of alert (and other) logging you would like.
 outputs:
@@ -81,7 +81,7 @@ outputs:
       enabled: yes
       filename: fast.log
       append: yes
-      #filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
+      filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
   
   - eve-log:
       enabled: yes
