@@ -86,10 +86,14 @@ outputs:
   - eve-log:
       enabled: yes
       filetype: unix_stream
-      filename: /tmp/suricata-stats.sock
+      filename: /var/run/suricata/suricata-stats.sock
       types:
         - stats:
            threads: yes
+        - alert:
+           enabled: yes
+           payload: yes
+           metadata: yes
 
   # Extensible Event Format (nicknamed EVE) event log in JSON format
   - eve-log:
@@ -1011,8 +1015,8 @@ asn1-max-frames: 256
 
 # Run Suricata with a specific user-id and group-id:
 #run-as:
-#  user: suri
-#  group: suri
+# user: root
+# group: root
 
 # Some logging modules will use that name in event as identifier. The default
 # value is the hostname

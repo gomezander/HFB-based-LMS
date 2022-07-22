@@ -4,6 +4,7 @@ volumes:
   influxdb_data: {}
   postgres_data: {}
   grafana_data: {}
+    #socket: {}
 
 networks:
   influx:
@@ -12,10 +13,39 @@ networks:
     external: false
 
 services:
+  telegraf:
+    container_name: telegraf
+    image: telegraf:${TELEGRAF_VERSION}
+    user: root
+   #profiles: ["telegraf"]
+    networks:
+      - influx
+    ports:
+      - 8125:8125/udp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    depends_on:
+      - influxdb
+    env_file:
+      - ./telegraf/telegraf.env
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/shared:/var/run/
+     # - ./socket/:/tmp/
+        # - ./suricata-telegraf-socket:/tmp
+     # - ${SOCKET_DIR}/:/tmp/:rw  
   suricata:
     image: jasonish/suricata:latest
     container_name: suricata
-    restart: always
+      #user: root
+      #profiles: ["suricata"]
+    restart: on-failure
+    depends_on:
+      - telegraf
     env_file:
       - './suricata/env.suricata'
     network_mode: "host"
@@ -27,10 +57,13 @@ services:
       - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
       - ./suricata/log:/var/log/suricata
       - ./suricata/rules:/var/lib/suricata/rules
+      - /var/run/shared:/var/run/suricata/
+      
 
   influxdb:
     container_name: influxdb
     image: influxdb:${INFLUXDB_VERSION}
+      #profiles: ["influx"]
     networks:
       - influx
     ports:
@@ -48,21 +81,6 @@ services:
       - influxdb_data:/var/lib/influxdb2
       - ./influxdb/config.yml:/etc/influxdb2/config.yml
 
-  telegraf:
-    container_name: telegraf
-    image: telegraf:${TELEGRAF_VERSION}
-    profiles: ["telegraf"]
-    networks:
-      - influx
-    ports:
-      - 8125:8125/udp
-    restart: always
-    depends_on:
-      - influxdb
-    env_file:
-      - ./telegraf/telegraf.env
-    volumes:
-      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
   postgres:
     container_name: postgres
