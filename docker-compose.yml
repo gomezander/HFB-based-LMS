@@ -63,7 +63,7 @@ services:
   influxdb:
     container_name: influxdb
     image: influxdb:${INFLUXDB_VERSION}
-      #profiles: ["influx"]
+     #profiles: ["influx"]
     networks:
       - influx
     ports:
