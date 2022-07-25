@@ -86,10 +86,12 @@ outputs:
   - eve-log:
       enabled: yes
       filetype: unix_stream
-      filename: /var/run/suricata/suricata-stats.sock
+      filename: /var/run/suricata/suricata-command.socket
       types:
         - stats:
-           threads: yes
+            totals: yes       # stats for all threads merged together
+            threads: yes       # per thread stats
+            deltas: yes        # include delta values
         - alert:
            enabled: yes
            payload: yes
