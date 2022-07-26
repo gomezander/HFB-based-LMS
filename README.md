@@ -14,13 +14,12 @@
         - [Input configuration](#input-configuration)
         - [Output configuration](#output-configuration)
     - [Permissions for Socket shared in volume](#permissions-for-socket-shared-in-volume)
+  - [How to Start](#how-to-start)
     - [Mapped Ports](#mapped-ports)
     - [Grafana](#grafana)
       - [Data source on Grafana](#data-source-on-grafana)
     - [InfluxDB](#influxdb)
       - [Web Interface](#web-interface)
-    - [Customizations](#customizations)
-  - [How to Start](#how-to-start)
 
 ## Versions
 
@@ -219,6 +218,34 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
     sudo chmod 600 -R /var/run/shared/*
     ```
 
+2. Add aditional volume in suricata docker-compose service:
+
+    ```bash
+      - /var/run/shared:/var/run/suricata/
+    ```
+
+3. Add aditional volume in telegraf docker-compose service:
+
+    ```bash
+      - /var/run/shared:/var/run/
+    ```
+
+## How to Start
+
+In order to start the service the first time launch:
+
+```bash
+COMPOSE_PROFILES=grafana,telegraf docker compose up -d
+```
+
+You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
+
+To stop the service launch:
+
+```bash
+COMPOSE_PROFILES=grafana,telegraf docker compose down
+```
+
 ### Mapped Ports
 
 ```
@@ -252,24 +279,4 @@ Open <http://localhost:8086>
 Username: admin
 Password: admin123456
 Port: 8086
-```
-
-### Customizations
-
-You can customize all settings in the attached config files, then you can stop and start the service in order to reload the new configurations.
-
-## How to Start
-
-In order to start the service the first time launch:
-
-```bash
-COMPOSE_PROFILES=grafana,telegraf docker compose up -d
-```
-
-You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
-
-To stop the service launch:
-
-```bash
-COMPOSE_PROFILES=grafana,telegraf docker compose down
 ```
