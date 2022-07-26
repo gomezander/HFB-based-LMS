@@ -17,7 +17,7 @@ services:
     container_name: telegraf
     image: telegraf:${TELEGRAF_VERSION}
     user: root
-    # profiles: ["telegraf"]
+    profiles: ["telegraf"]
     networks:
       - influx
     ports:
@@ -41,7 +41,7 @@ services:
     image: jasonish/suricata:${SURICATA_VERSION}
     container_name: suricata
     # user: root
-    # profiles: ["suricata"]
+    profiles: ["suricata"]
     restart: on-failure
     depends_on:
       - telegraf
@@ -61,7 +61,7 @@ services:
   influxdb:
     container_name: influxdb
     image: influxdb:${INFLUXDB_VERSION}
-    # profiles: ["influx"]
+    profiles: ["influx"]
     networks:
       - influx
     ports:

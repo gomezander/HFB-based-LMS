@@ -21,6 +21,9 @@
       - [Data source on Grafana](#data-source-on-grafana)
     - [InfluxDB](#influxdb)
       - [Web Interface](#web-interface)
+  - [Troubleshootings](#troubleshootings)
+    - [Test socket on suricata container](#test-socket-on-suricata-container)
+    - [Test socket on telegraf container](#test-socket-on-telegraf-container)
 
 ## Versions
 
@@ -257,9 +260,17 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
 
 In order to start the service the first time launch:
 
-```bash
-COMPOSE_PROFILES=grafana,telegraf docker compose up -d
-```
+1. Start influxdb:
+
+    ```bash
+    COMPOSE_PROFILES=influx docker compose up -d
+    ```
+
+2. Start telegraf,suricata:
+
+    ```bash
+    COMPOSE_PROFILES=telegraf,suricata docker compose up -d
+    ```
 
 You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
 
@@ -302,4 +313,68 @@ Open <http://localhost:8086>
 Username: admin
 Password: admin123456
 Port: 8086
+```
+
+## Troubleshootings
+
+### Test socket on suricata container
+
+1. Use the tool:
+
+```bash
+root@dd39f97b4f3f:/suricata/python# suricatasc
+Unable to connect to socket @e_localstatedir@/suricata-command.socket: [Errno 2] No such file or directory
+root@dd39f97b4f3f:/suricata/python# suricatasc /var/run/suricata-command.socket
+Command list: shutdown, command-list, help, version, uptime, running-mode, capture-mode, conf-get, dump-counters, reload-rules, ruleset-reload-rules, ruleset-reload-nonblocking, ruleset-reload-time, ruleset-stats, ruleset-failed-rules, register-tenant-handler, unregister-tenant-handler, register-tenant, reload-tenant, unregister-tenant, add-hostbit, remove-hostbit, list-hostbit, reopen-log-files, memcap-set, memcap-show, memcap-list, dataset-add, dataset-remove, iface-stat, iface-list, iface-bypassed-stat, ebpf-bypassed-stat, quit
+>>> iface-list
+Success:
+{
+    "count": 1,
+    "ifaces": [
+        "eth0"
+    ]
+}
+>>> iface-stat eth0
+Success:
+{
+    "bypassed": 0,
+    "drop": 11284,
+    "invalid-checksums": 2,
+    "pkts": 183099
+}
+```
+
+### Test socket on telegraf container
+
+1. Update pakage manager: `apt update`
+2. Install git: `apt install git`
+3. Clone suricata repo: `git clone https://github.com/OISF/suricata.git`
+4. Access to directory: `cd /suricata/python/suricata/config/`
+5. Rename file: `mv defaults.py.in defaults.py`
+6. Install python: `apt install -y build-essential libssl-dev libffi-dev python3-dev`
+7. Access to directory: `cd /suricata/python`
+8. Install tool `python3 setup.py install`
+9. Use the tool:
+
+```bash
+root@dd39f97b4f3f:/suricata/python# suricatasc
+Unable to connect to socket @e_localstatedir@/suricata-command.socket: [Errno 2] No such file or directory
+root@dd39f97b4f3f:/suricata/python# suricatasc /var/run/suricata-command.socket
+Command list: shutdown, command-list, help, version, uptime, running-mode, capture-mode, conf-get, dump-counters, reload-rules, ruleset-reload-rules, ruleset-reload-nonblocking, ruleset-reload-time, ruleset-stats, ruleset-failed-rules, register-tenant-handler, unregister-tenant-handler, register-tenant, reload-tenant, unregister-tenant, add-hostbit, remove-hostbit, list-hostbit, reopen-log-files, memcap-set, memcap-show, memcap-list, dataset-add, dataset-remove, iface-stat, iface-list, iface-bypassed-stat, ebpf-bypassed-stat, quit
+>>> iface-list
+Success:
+{
+    "count": 1,
+    "ifaces": [
+        "eth0"
+    ]
+}
+>>> iface-stat eth0
+Success:
+{
+    "bypassed": 0,
+    "drop": 11284,
+    "invalid-checksums": 2,
+    "pkts": 183099
+}
 ```
