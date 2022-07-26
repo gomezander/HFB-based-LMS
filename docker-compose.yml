@@ -1,0 +1,118 @@
+version: "3.9"
+
+volumes:
+  influxdb_data: {}
+  postgres_data: {}
+  grafana_data: {}
+
+networks:
+  influx:
+    name: influx-frontend
+  postgres:
+    external: false
+
+services:
+
+  telegraf:
+    container_name: telegraf
+    image: telegraf:${TELEGRAF_VERSION}
+    user: root
+    profiles: ["telegraf"]
+    networks:
+      - influx
+    ports:
+      - 8125:8125/udp
+      - 80:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+    depends_on:
+      - influxdb
+    env_file:
+      - ./telegraf/telegraf.env
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/shared:/var/run/
+
+  suricata:
+    image: jasonish/suricata:${SURICATA_VERSION}
+    container_name: suricata
+    # user: root
+    profiles: ["suricata"]
+    restart: on-failure
+    depends_on:
+      - telegraf
+    env_file:
+      - './suricata/env.suricata'
+    network_mode: "host"
+    cap_add: 
+      - NET_ADMIN
+      - SYS_NICE
+      - NET_RAW
+    volumes:
+      - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml
+      - ./suricata/log:/var/log/suricata
+      - ./suricata/rules:/var/lib/suricata/rules
+      - /var/run/shared:/var/run/suricata/
+      
+  influxdb:
+    container_name: influxdb
+    image: influxdb:${INFLUXDB_VERSION}
+    profiles: ["influx"]
+    networks:
+      - influx
+    ports:
+      - 8086:8086
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    restart: always
+    env_file:
+      - ./influxdb/influxdb.env
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - ./influxdb/config.yml:/etc/influxdb2/config.yml
+
+  postgres:
+    container_name: postgres
+    image: bitnami/postgresql:${POSTGRES_VERSION}
+    profiles: ["grafana"]
+    networks:
+      - postgres
+    restart: always
+    env_file:
+      - ./postgres/postgres.env
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-enterprise:${GRAFANA_VERSION}
+    profiles: ["grafana"]
+    networks:
+      - postgres
+      - influx
+    ports:
+      - 3000:3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    restart: always
+    depends_on:
+      - postgres
+      - influxdb
+    env_file:
+      - ./grafana/grafana.env
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/dashboards
