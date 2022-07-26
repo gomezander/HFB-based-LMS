@@ -8,6 +8,11 @@
       - [Configure suricata.yaml](#configure-suricatayaml)
         - [Global stats configuration](#global-stats-configuration)
         - [Eve-log configuration](#eve-log-configuration)
+    - [Configure telegraf](#configure-telegraf)
+      - [configure telegraf.conf](#configure-telegrafconf)
+        - [Global tags configuration](#global-tags-configuration)
+        - [Input configuration](#input-configuration)
+        - [Output configuration](#output-configuration)
     - [Shared Socket volume](#shared-socket-volume)
     - [Mapped Ports](#mapped-ports)
     - [Grafana](#grafana)
@@ -127,7 +132,7 @@ stats:
 
 ##### Eve-log configuration
 
-```
+```bash
 - eve-log:
     enabled: yes
     filetype: unix_stream
@@ -143,7 +148,71 @@ stats:
          metadata: yes
 ```
 
+### Configure telegraf
+
+#### configure telegraf.conf
+
+##### Global tags configuration
+
+```bash
+# Global tags can be specified here in key="value" format.
+[global_tags]
+  # dc = "us-east-1" # will tag all metrics with dc=us-east-1
+  # rack = "1a"
+  ## Environment variables can be used as tags, and throughout the config file
+  # user = "$USER"
+```
+
+##### Input configuration
+
+```bash
+# Suricata stats and alerts plugin
+[[inputs.suricata]]
+  ## Data sink for Suricata stats and alerts logs
+  # This is expected to be a filename of a
+  # unix socket to be created for listening.
+  source = "/var/run/suricata-command.socket"
+
+  # Delimiter for flattening field keys, e.g. subitem "alert" of "detect"
+  # becomes "detect_alert" when delimiter is "_".
+  delimiter = "_"
+
+  ## Detect alert logs
+  alerts = true
+```
+
+##### Output configuration
+
+```bash
+# # Configuration for sending metrics to InfluxDB
+[[outputs.influxdb_v2]]
+  ## The URLs of the InfluxDB cluster nodes.
+  ##
+  ## Multiple URLs can be specified for a single cluster, only ONE of the
+  ## urls will be written to each interval.
+  ##   ex: urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
+  urls = ["http://influxdb:8086"]
+
+  ## Token for authentication.
+  token = "$INFLUXDB_INIT_ADMIN_TOKEN"
+
+  ## Organization is the name of the organization you wish to write to; must exist.
+  organization = "$INFLUXDB_INIT_ORG"
+
+  ## Destination bucket to write into.
+  bucket = "$INFLUXDB_INIT_BUCKET"
+```
+
+Environmental variables must be updated on: ~/composer-suri-tele-infl-graf
+
+```bash
+INFLUXDB_INIT_ORG=myorganization
+INFLUXDB_INIT_BUCKET=mybucket
+INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_VLgWrbkENFICiXk87rwB1T7wB8a93VonQ==
+```
+
 ### Shared Socket volume
+
 
 1. Give permissions to the shared volume for sockets
 
