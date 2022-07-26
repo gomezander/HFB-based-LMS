@@ -87,9 +87,9 @@
         - my-rules
     ```
 
-### Configure suricata.yaml
+#### Configure suricata.yaml
 
-#### Global stats configuration
+##### Global stats configuration
 
 ```
 # Global stats configuration
@@ -107,7 +107,7 @@ stats:
   stream-events: false
 ```
 
-#### eve-log configuration
+##### Eve-log configuration
 
 ```
 - eve-log:
