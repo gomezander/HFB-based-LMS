@@ -248,7 +248,7 @@ InfluxDB data source is automatically provisioned with new Flux language support
 
 Open <http://localhost:8086>
 
-```
+```bash
 Username: admin
 Password: admin123456
 Port: 8086
@@ -262,7 +262,7 @@ You can customize all settings in the attached config files, then you can stop a
 
 In order to start the service the first time launch:
 
-```
+```bash
 COMPOSE_PROFILES=grafana,telegraf docker compose up -d
 ```
 
@@ -270,6 +270,6 @@ You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to
 
 To stop the service launch:
 
-```
+```bash
 COMPOSE_PROFILES=grafana,telegraf docker compose down
 ```
