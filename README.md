@@ -89,7 +89,7 @@
 
 ### Configure suricata.yaml
 
-    ```bash
+    ```
     # Global stats configuration
     stats:
       enabled: yes
