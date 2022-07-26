@@ -19,13 +19,14 @@
 
 ## Versions
 
-* Suricata:          6.0.6
-* InfluxDB:          2.3.0
-* Telegraf (StatsD): 1.23.2
-* Postgres:          14.2.0
-* Grafana:           8.4.3
+- Suricata:          6.0.6
+- InfluxDB:          2.3.0
+- Telegraf (StatsD): 1.23.2
+- Postgres:          14.2.0
+- Grafana:           8.4.3
 
 ## Pre-requisites
+
 - Download and install the latest available version of [Docker](https://docs.docker.com/engine/install/ubuntu/)
 - Download and install the latest available version of [Docker Compose](https://docs.docker.com/compose/install/)
 - Configure [Docker as non root](https://docs.docker.com/engine/install/linux-postinstall/)
@@ -69,19 +70,19 @@
 6. Add next rules:
 
     1. Ping detection
-    
+
         ```bash
           alert icmp any any -> $HOME_NET any (msg:"ICMP connection attempt"; sid:1000002; rev:1;)
         ```
 
     2. SSH connections detection
-    
+
         ```bash
           alert tcp any any -> $HOME_NET 22 (msg:"SSH connection attempt"; sid:1000003; rev:1;)
         ```
 
-    3. Detects excessive packet forwarding to port 80 
-    
+    3. Detects excessive packet forwarding to port 80.
+
         ```bash
           alert tcp any any -> $HOME_NET 80 (msg:"DDoS Unusually fast port 80 SYN packets outbound, Potential DDoS"; flags: S,12; threshold: type both, track by_dst, count 500, seconds 5; classtype:misc-activity; sid:6;)
         ```
@@ -108,7 +109,7 @@
 
 ##### Global stats configuration
 
-```
+```bash
 # Global stats configuration
 stats:
   enabled: yes
