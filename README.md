@@ -13,7 +13,7 @@
         - [Global tags configuration](#global-tags-configuration)
         - [Input configuration](#input-configuration)
         - [Output configuration](#output-configuration)
-    - [Shared Socket volume](#shared-socket-volume)
+    - [Permissions for Socket shared in volume](#permissions-for-socket-shared-in-volume)
     - [Mapped Ports](#mapped-ports)
     - [Grafana](#grafana)
       - [Data source on Grafana](#data-source-on-grafana)
@@ -211,8 +211,7 @@ INFLUXDB_INIT_BUCKET=mybucket
 INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_VLgWrbkENFICiXk87rwB1T7wB8a93VonQ==
 ```
 
-### Shared Socket volume
-
+### Permissions for Socket shared in volume
 
 1. Give permissions to the shared volume for sockets
 
@@ -234,7 +233,7 @@ Host		Container		Service
 
 Open <http://localhost:3000>
 
-```
+```bash
 Username: admin
 Password: admin
 ```
