@@ -87,7 +87,25 @@
         - my-rules
     ```
 
-### Socket volume
+### Configure suricata.yaml
+
+    ```bash
+    # Global stats configuration
+    stats:
+      enabled: yes
+      # The interval field (in seconds) controls the interval at
+      # which stats are updated in the log.
+      interval: 8
+      # Add decode events to stats.
+      decoder-events: true
+      # Decoder event prefix in stats. Has been 'decoder' before, but that leads
+      # to missing events in the eve.stats records. See issue #2225.
+      decoder-events-prefix: "decoder.event"
+      # Add stream events as stats.
+      stream-events: false
+    ```
+
+### Shared Socket volume
 
 1. Give permissions to the shared volume for sockets
 
