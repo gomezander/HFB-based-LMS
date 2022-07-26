@@ -14,6 +14,7 @@
         - [Input configuration](#input-configuration)
         - [Output configuration](#output-configuration)
     - [Permissions for Socket shared in volume](#permissions-for-socket-shared-in-volume)
+    - [Configure InfluxDB](#configure-influxdb)
   - [How to Start](#how-to-start)
     - [Mapped Ports](#mapped-ports)
     - [Grafana](#grafana)
@@ -229,6 +230,28 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
     ```bash
       - /var/run/shared:/var/run/
     ```
+
+### Configure InfluxDB
+
+1. Verify the bucket creation
+
+   ![Bucket](./image/bucket.png)
+
+2. Associate telegraf agent to this bucket
+
+   ![Telegraf Agent](./image/telegraf.png)
+
+3. Configure plugins
+
+   ![Telegraf Agent](./image/telegraf2.png)
+
+4. Collect token and press *Listen for Data* Button
+
+   ![Telegraf Agent](./image/telegraf3.png)
+
+5. Selects metrics and configure dashboard
+
+   ![Telegraf Agent](./image/influxdb.png)
 
 ## How to Start
 
