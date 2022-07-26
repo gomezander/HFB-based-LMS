@@ -1,10 +1,27 @@
 # Service with Suricata, Telegraf, InfluxDB and Grafana
 
+- [Service with Suricata, Telegraf, InfluxDB and Grafana](#service-with-suricata-telegraf-influxdb-and-grafana)
+  - [Versions](#versions)
+  - [Pre-requisites](#pre-requisites)
+  - [Getting Started](#getting-started)
+    - [Configure suricata](#configure-suricata)
+      - [Configure suricata.yaml](#configure-suricatayaml)
+        - [Global stats configuration](#global-stats-configuration)
+        - [Eve-log configuration](#eve-log-configuration)
+    - [Shared Socket volume](#shared-socket-volume)
+    - [Mapped Ports](#mapped-ports)
+    - [Grafana](#grafana)
+      - [Data source on Grafana](#data-source-on-grafana)
+    - [InfluxDB](#influxdb)
+      - [Web Interface](#web-interface)
+    - [Customizations](#customizations)
+  - [How to Start](#how-to-start)
+
 ## Versions
 
-* Suricata:          ???
-* InfluxDB:          2.1.1
-* Telegraf (StatsD): 1.21
+* Suricata:          6.0.6
+* InfluxDB:          2.3.0
+* Telegraf (StatsD): 1.23.2
 * Postgres:          14.2.0
 * Grafana:           8.4.3
 
