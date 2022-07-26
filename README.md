@@ -89,6 +89,8 @@
 
 ### Configure suricata.yaml
 
+#### Global stats configuration
+
 ```
 # Global stats configuration
 stats:
@@ -103,6 +105,24 @@ stats:
   decoder-events-prefix: "decoder.event"
   # Add stream events as stats.
   stream-events: false
+```
+
+#### eve-log configuration
+
+```
+- eve-log:
+    enabled: yes
+    filetype: unix_stream
+    filename: /var/run/suricata/suricata-command.socket
+    types:
+      - stats:
+          totals: yes       # stats for all threads merged together
+          threads: yes       # per thread stats
+          deltas: yes        # include delta values
+      - alert:
+         enabled: yes
+         payload: yes
+         metadata: yes
 ```
 
 ### Shared Socket volume
