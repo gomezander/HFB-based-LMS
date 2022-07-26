@@ -138,14 +138,14 @@ You can customize all settings in the attached config files, then you can stop a
 
 In order to start the service the first time launch:
 
-    ```sh
-    COMPOSE_PROFILES=grafana,telegraf docker compose up -d
-    ```
+```
+COMPOSE_PROFILES=grafana,telegraf docker compose up -d
+```
 
 You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
 
 To stop the service launch:
 
-    ```sh
-    COMPOSE_PROFILES=grafana,telegraf docker compose down
-    ```
+```
+COMPOSE_PROFILES=grafana,telegraf docker compose down
+```
