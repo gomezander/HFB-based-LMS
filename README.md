@@ -266,7 +266,9 @@ In order to start the service the first time launch:
     COMPOSE_PROFILES=influx docker compose up -d
     ```
 
-2. Start telegraf,suricata:
+2. Configure influxDB as section [Configure InfluxDB](https://github.com/gomezander/composer-suri-tele-infl-graf/tree/dev#configure-influxdb)
+
+3. Start telegraf,suricata:
 
     ```bash
     COMPOSE_PROFILES=telegraf,suricata docker compose up -d
