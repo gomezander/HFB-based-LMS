@@ -92,7 +92,7 @@
 1. Give permissions to the shared volume for sockets
 
     ```bash
-    sudo chmod 777 -R /var/run/shared/*
+    sudo chmod 600 -R /var/run/shared/*
     ```
 
 ### Mapped Ports
