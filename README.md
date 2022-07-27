@@ -219,7 +219,7 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
 1. Give permissions to the shared volume for sockets
 
     ```bash
-    sudo chmod 600 -R /var/run/shared/*
+    sudo chmod 777 /var/run/shared
     ```
 
 2. Add aditional volume in suricata docker-compose service:
