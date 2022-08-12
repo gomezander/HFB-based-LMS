@@ -325,7 +325,8 @@ In order to start the service the first time launch:
 6. Check that suricata data is received in InfluxDB
 
     Make a new dashboard and select the suricata alerts you want to see.
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6657549d-b3b7-439f-   837a-419cf949b5dc/Untitled.png)
+    ![Untitled](https://user-images.githubusercontent.com/105321735/184310314-06c4741f-ea4e-4d3a-8725-f1f71ec6faf6.png)
+
 
 7. Start Grafana
 
@@ -347,7 +348,8 @@ Password: admin
 Check that InfluxDB datasource is added in Configuration --> Data Sources
 
 Add a new panel and check that data is being received.
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cfc5071b-abd2-4f8e-89c7-ad541a340a62/Untitled.png)
+![Untitled2](https://user-images.githubusercontent.com/105321735/184310392-5aab88b8-8655-469d-b7b2-85bd0033ed66.png)
+
 
 ### Mapped Ports
 
