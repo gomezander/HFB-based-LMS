@@ -236,6 +236,11 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
 
 ### Configure InfluxDB
 
+```bash
+user: admin
+password: admin123456
+```
+
 1. Verify the bucket creation
 
    ![Bucket](./image/bucket.png)
@@ -334,21 +339,37 @@ In order to start the service the first time launch:
       COMPOSE_PROFILES=grafana docker compose up -d
     ```
 
-### Grafana
 
-Open <http://localhost:3000>
+    Open <http://localhost:3000>
 
-```bash
-Username: admin
-Password: admin
-```
+    ```bash
+    Username: admin
+    Password: admin
+    ```
 
-#### Data source on Grafana
+    #### Data source on Grafana
 
-Check that InfluxDB datasource is added in Configuration --> Data Sources
+    Check that InfluxDB datasource is added in Configuration --> Data Sources
 
-Add a new panel and check that data is being received.
-![Untitled2](https://user-images.githubusercontent.com/105321735/184310392-5aab88b8-8655-469d-b7b2-85bd0033ed66.png)
+    Add a new panel and check that data is being received. You can use the examples provided by Grafana.
+    ![Untitled2](https://user-images.githubusercontent.com/105321735/184310392-5aab88b8-8655-469d-b7b2-85bd0033ed66.png)
+    
+    Create a neew dashboard and select the data you want to see by making a Flux query.
+    You can copy the query from InfluxDB dashboard, selecting **Script Editor**.
+    
+    In this case, we wanted to see the ssh alerts of suricata.
+    
+    ![tempsnip](https://user-images.githubusercontent.com/105321735/184369581-af5190cc-ab51-4404-813c-893107a96e17.png)
+    
+    
+    ![image](https://user-images.githubusercontent.com/105321735/184369797-4f10840b-45c0-4cb6-bf23-9d817c31a0dd.png)
+
+    
+## Final result in Grafana
+![image](https://user-images.githubusercontent.com/105321735/184370125-8a37ae85-93d6-4e10-bb4d-849fbe40c61e.png)
+
+
+
 
 
 ### Mapped Ports
