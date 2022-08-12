@@ -274,21 +274,21 @@ In order to start the service the first time launch:
     COMPOSE_PROFILES=telegraf docker compose up -d
     ```
     
-You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
+    You can replace `COMPOSE_PROFILES=grafana,telegraf` with the desired profiles to launch, you can launch only InfluxDB (default with no profiles).
 
-To stop the service launch:
+    To stop the service launch:
 
-```bash
-COMPOSE_PROFILES=grafana,telegraf docker compose down
-```
+    ```bash
+    COMPOSE_PROFILES=grafana,telegraf docker compose down
+    ```
 
-Make sure that telegraf creates the socket to communicate with suricata correctly, by checking the logs os the container.
+    Make sure that telegraf creates the socket to communicate with suricata correctly, by checking the logs os the container.
 
     ```bash
     docker compose logs
     ```
     
-It is important that the telegraf container is started before the suricata container, otherwise suricata won't be able to connect to the socket.
+    It is important that the telegraf container is started before the suricata container, otherwise suricata won't be able to connect to the socket.
 
 4. Start suricata
 
@@ -296,7 +296,7 @@ It is important that the telegraf container is started before the suricata conta
     COMPOSE_PROFILES=suricata docker compose up -d
     ```
 
-Once again make sure that suricata connects to the socket properly.
+    Once again make sure that suricata connects to the socket properly.
 
     ```bash
     docker compose logs
@@ -304,19 +304,19 @@ Once again make sure that suricata connects to the socket properly.
     
 5. Configure InfluxDB datasource from web interface
 
-InfluxDB data source is automatically provisioned with new Flux language support flag.
+    InfluxDB data source is automatically provisioned with new Flux language support flag.
 
-Open <http://localhost:8086>
+    Open <http://localhost:8086>
 
-```bash
-Username: admin
-Password: admin123456
-Port: 8086
-```
+    ```bash
+    Username: admin
+    Password: admin123456
+    Port: 8086
+    ```
 
-Once configured the telegraf agent (as shown in Configure InfluxDB) copy the token and paste it in telegraf.env inside the telegraf folder.
+    Once configured the telegraf agent as section [Configure InfluxDB](https://github.com/gomezander/composer-suri-tele-infl-graf/tree/dev#configure-influxdb) copy the     token and paste it in telegraf.env inside the telegraf folder.
 
-Start telegraf container and restart suricata container.
+    Start telegraf container and restart suricata container.
 
     ```bash
       COMPOSE_PROFILES=telegraf,suricata docker compose up -d
@@ -324,8 +324,8 @@ Start telegraf container and restart suricata container.
 
 6. Check that suricata data is received in InfluxDB
 
-  Make a new dashboard and select the suricata alerts you want to see.
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6657549d-b3b7-439f-   837a-419cf949b5dc/Untitled.png)
+    Make a new dashboard and select the suricata alerts you want to see.
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6657549d-b3b7-439f-   837a-419cf949b5dc/Untitled.png)
 
 7. Start Grafana
 
