@@ -24,6 +24,9 @@
   - [Troubleshootings](#troubleshootings)
     - [Test socket on suricata container](#test-socket-on-suricata-container)
     - [Test socket on telegraf container](#test-socket-on-telegraf-container)
+  - [Nodejs agent](#nodejs-agent)
+    - [Run agent](#run-agent)
+    - [Change query](#change-query)
 
 ## Versions
 
@@ -380,3 +383,48 @@ Success:
     "pkts": 183099
 }
 ```
+
+## Nodejs agent
+
+A simple Node.js agent that queries logs from Suricata via InfluxDB JavaScript API.
+
+### Run agent
+
+To run the agent, go to the node-agent folder and start docker-compose
+
+```bash
+docker compose up
+```
+
+
+
+The script will execute automatically, and you will see the results on the terminal.
+
+![Untitled](https://user-images.githubusercontent.com/105321735/187083115-05380f0a-c097-4c46-814d-227a00501c4a.png)
+
+If we compare the values of the query with the ones in InfuxDB, we can see that the results are correct
+
+![Untitled2](https://user-images.githubusercontent.com/105321735/187083149-cacad887-048a-4716-a2f5-dcb5ac60f6ff.png)
+
+
+### Change Query
+
+If we want to change the query, we must edit line 22 of the file **query.js**, inside **src** folder.
+
+![image](https://user-images.githubusercontent.com/105321735/187083228-274d6dfc-ad26-4f4e-91a0-6aa29e6e3afb.png)
+
+The queries are in Flux Language, as in InfluxDB and Grafana.
+
+The query used for these results is the following:
+
+```flux
+from(bucket: "mybucket")
+  |> range(start:-1h)
+  |> filter(fn: (r) => r["_measurement"] == "suricata")
+  |> filter(fn: (r) => r["_field"] == "app_layer_flow_ssh_delta")
+  |> filter(fn: (r) => r["host"] == "d7b69d8d52c6")
+  |> filter(fn: (r) => r["thread"] == "total")
+  |> aggregateWindow(every: 10s, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+```
+
