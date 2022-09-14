@@ -1,0 +1,15 @@
+{
+  "name": "node-influx-agent",
+  "version": "0.0.1",
+  "description": "",
+  "main": "query,js",
+  "scripts": {
+    "start": "node src/query.js",
+    "database": "node src/db.js"
+  },
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.29.0",
+    "@influxdata/influxdb-client-apis": "^1.29.0",
+    "mongoose": "^6.5.3"
+  }
+}
