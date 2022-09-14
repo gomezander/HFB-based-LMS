@@ -19,7 +19,7 @@ const org = process.env.INFLUX_ORG || 'myorganization'
 const queryApi = new InfluxDB({url, token}).getQueryApi(org)
 
 /** To avoid SQL injection, use a string literal for the query. */
-const fluxQuery = 'from(bucket: "mybucket") |> range(start:-1h) |> filter(fn: (r) => r["_measurement"] == "suricata") |> filter(fn: (r) => r["host"] == "d52817bd8c43") |> filter(fn: (r) => r["_field"] == "app_layer_flow_ssh") |> filter(fn: (r) => r["thread"] == "total") |> aggregateWindow(every: 10s, fn: mean, createEmpty: false) |> yield(name: "mean")'
+const fluxQuery = 'from(bucket: "mybucket") |> range(start: -1h) |> filter(fn: (r) => r["_measurement"] == "suricata") |> filter(fn: (r) => r["_field"] == "app_layer_flow_ssh") |> filter(fn: (r) => r["host"] == "ba954865fba7") |> filter(fn: (r) => r["thread"] == "total") |> aggregateWindow(every: 10s, fn: mean, createEmpty: false) |> yield(name: "mean")'
 const fluxObserver = {
   next(row, tableMeta) {
     const o = tableMeta.toObject(row)
