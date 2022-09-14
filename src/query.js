@@ -26,7 +26,7 @@ const REDIS_URL = process.env.REDIS_URL || "redis"
 const client = redis.createClient({
     legacyMode: true,
     docket: {
-        port: REDIS_PORT,
+        port: REDIS_PORT + "/test",
         host: REDIS_URL
     }
 });
