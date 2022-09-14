@@ -2,15 +2,11 @@ version: "3.9"
 
 volumes:
   influxdb_data: {}
-  postgres_data: {}
   grafana_data: {}
-  mongo-db: {}
 
 networks:
   influx:
     name: influx-frontend
-  postgres:
-    external: false
 
 services:
 
@@ -80,24 +76,11 @@ services:
       - influxdb_data:/var/lib/influxdb2
       - ./influxdb/config.yml:/etc/influxdb2/config.yml
 
-  postgres:
-    container_name: postgres
-    image: bitnami/postgresql:${POSTGRES_VERSION}
-    profiles: ["grafana"]
-    networks:
-      - postgres
-    restart: always
-    env_file:
-      - ./postgres/postgres.env
-    volumes:
-      - postgres_data:/bitnami/postgresql
-
   grafana:
     container_name: grafana
     image: grafana/grafana-enterprise:${GRAFANA_VERSION}
     profiles: ["grafana"]
     networks:
-      - postgres
       - influx
     ports:
       - 3000:3000
@@ -109,7 +92,6 @@ services:
       start_period: 40s
     restart: always
     depends_on:
-      - postgres
       - influxdb
     env_file:
       - ./grafana/grafana.env
@@ -140,43 +122,4 @@ services:
 
 
 
- # Database FIWARE
-  mongo-db:
-    image: mongo:${MONGO_DB_VERSION}
-    hostname: mongo-db
-    container_name: db-mongo
-    profiles: ["database"]
-    restart: always
-    expose:
-      - "${MONGO_DB_PORT}"
-    ports:
-      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
-    networks:
-      - influx
-    volumes:
-      - ./mongo-db:/data
-    healthcheck:
-      test: |
-        host=`hostname --ip-address || echo '127.0.0.1'`; 
-        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1
-      interval: 5s
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    profiles: ["database-visual"]
-    restart: always
-    ports:
-      - "28081:8081"
-    environment:
-      # ME_CONFIG_MONGODB_SERVER: mongo
-      # ME_CONFIG_BASICAUTH_USERNAME: admin
-      # ME_CONFIG_BASICAUTH_PASSWORD: changeme
-      # ME_CONFIG_MONGODB_AUTH_DATABASE: admin
-      # ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
-      # ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
-      ME_CONFIG_MONGODB_URL: mongodb://mongo-db:27017"
-    depends_on:
-      - mongo-db
-    networks:
-      - influx
