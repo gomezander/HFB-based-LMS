@@ -126,9 +126,9 @@ services:
     image: node-agent
     profiles: ["node-agent"]
     build: .
-    command: "node src/query.js"
     networks:
       - influx
+
 
 
 

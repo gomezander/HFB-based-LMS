@@ -12,6 +12,8 @@
     "@influxdata/influxdb-client-apis": "^1.29.0",
     "axios": "^0.27.2",
     "express": "^4.18.1",
-    "node-redis": "^0.1.7"
+    "node-cron": "^3.0.2",
+    "node-redis": "^0.1.7",
+    "redis": "^4.3.1"
   }
 }

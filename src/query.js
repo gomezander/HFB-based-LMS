@@ -13,13 +13,11 @@ const org = process.env.INFLUX_ORG || 'myorganization'
 
 
 
-
-
 //Redis Connection
 import express from 'express';
 import redis from 'redis';
 import crypto from 'crypto';
-const app = express()
+//const app = express()
 const PORT = process.env.PORT || 9000
 const REDIS_PORT = process.env.REDIS_PORT || 6379
 const REDIS_URL = process.env.REDIS_URL || "redis"
@@ -37,7 +35,7 @@ var hash = crypto.createHash('md5').update(val).digest('hex');
 
 client.on('connect', () => console.log(`Redis is connected on port ${REDIS_PORT}`))
 client.on("error", (error) => console.error(error))
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
 //module.exports = app
 
 
@@ -58,21 +56,26 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 const queryApi = new InfluxDB({url, token}).getQueryApi(org)
 
 /** To avoid SQL injection, use a string literal for the query. */
-const fluxQuery = 'from(bucket: "mybucket") |> range(start: -1h) |> filter(fn: (r) => r["_measurement"] == "suricata") |> filter(fn: (r) => r["_field"] == "app_layer_flow_ssh") |> filter(fn: (r) => r["host"] == "host") |> filter(fn: (r) => r["thread"] == "total") |> aggregateWindow(every: 10s, fn: mean, createEmpty: false) |> yield(name: "mean")'
+const fluxQuery = 'from(bucket: "mybucket") |> range(start: -10s) |> filter(fn: (r) => r["_measurement"] == "suricata") |> filter(fn: (r) => r["_field"] == "app_layer_flow_ssh") |> filter(fn: (r) => r["host"] == "host") |> filter(fn: (r) => r["thread"] == "total") |> aggregateWindow(every: 10s, fn: mean, createEmpty: false) |> yield(name: "mean")'
 const fluxObserver = {
   next(row, tableMeta) {
     const o = tableMeta.toObject(row)
     console.log(
       `${o._time} ${o._measurement} in ${o.region} (${o.sensor_id}): ${o._field}=${o._value}`)
+      
       val = `${o._time} ${o._measurement} in ${o.region} (${o.sensor_id}): ${o._field}=${o._value}`;
       hash = crypto.createHash('md5').update(val).digest('hex');
-      console.log("hash of", val, " : ", hash)
+      console.log("Key/Value pair added to Redis database: ", hash, " : ", val, )
 
+      /*
       client.set(hash,val);
       var key = hash;
       client.get(key, function(err, result) {
             console.log("Value from key " + key + " : ", result.toString());
+            process.exit();
         });
+      */
+      
     
   },
   error(error) {
@@ -85,8 +88,18 @@ const fluxObserver = {
 }
 
 
-/** Execute a query and receive line table metadata and rows. */
-queryApi.queryRows(fluxQuery, fluxObserver)
+// Cron Job
+import cron from 'node-cron'
+
+cron.schedule('*/10 * * * * *', () => {
+  console.log('running a task every 10s');
+  /** Execute a query and receive line table metadata and rows. */
+  queryApi.queryRows(fluxQuery, fluxObserver)
+
+});
+
+
+
 
 
 
