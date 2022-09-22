@@ -2,12 +2,16 @@ version: "3.9"
 
 volumes:
   influxdb_data: {}
+  postgres_data: {}
   grafana_data: {}
   redisinsight: {}
 
 networks:
   influx:
     name: influx-frontend
+  postgres:
+    external: false
+
 
 services:
 
@@ -82,6 +86,7 @@ services:
     image: grafana/grafana-enterprise:${GRAFANA_VERSION}
     profiles: ["grafana"]
     networks:
+      - postgres
       - influx
     ports:
       - 3000:3000
@@ -93,6 +98,7 @@ services:
       start_period: 40s
     restart: always
     depends_on:
+      - postgres
       - influxdb
     env_file:
       - ./grafana/grafana.env
@@ -123,11 +129,22 @@ services:
 
 
   agent:
-    image: node-agent
     profiles: ["node-agent"]
-    build: .
+    image: nodeagent
     networks:
       - influx
+
+  postgres:
+    container_name: postgres
+    image: bitnami/postgresql:${POSTGRES_VERSION}
+    profiles: ["grafana"]
+    networks:
+      - postgres
+    restart: always
+    env_file:
+      - ./postgres/postgres.env
+    volumes:
+      - postgres_data:/bitnami/postgresql
 
 
 

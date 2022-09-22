@@ -19,12 +19,18 @@ client.on("error", (error) => console.error(error))
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 //module.exports = app
 
-var val = 'log_value';
+var val = 'log value';
 var hash = crypto.createHash('md5').update(val).digest('hex');
 console.log("hash of", val, " : ", hash)
 
+await client.connect();
 client.set(hash,val);
 var key = hash;
+/*
 client.get(key, function(err, result) {
       console.log("Value from key " + key + " : ", result.toString());
   });
+*/
+
+
+
