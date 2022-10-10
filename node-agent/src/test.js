@@ -36,6 +36,7 @@ const fluxObserver = {
   }
 }
 
+
 /** Execute a query and receive line table metadata and rows. */
 queryApi.queryRows(fluxQuery, fluxObserver)
 
