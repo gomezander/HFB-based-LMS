@@ -130,7 +130,7 @@ services:
 
   agent:
     profiles: ["node-agent"]
-    image: nodeagent
+    build: ./node-agent
     networks:
       - influx
 

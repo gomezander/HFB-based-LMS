@@ -6,7 +6,7 @@
 import { InfluxDB, Point } from '@influxdata/influxdb-client'
 
 /** Environment variables **/
-const url = process.env.INFLUX_URL || 'http://localhost:8086'
+const url = process.env.INFLUX_URL || 'http://influxdb:8086'
 const token = process.env.INFLUX_TOKEN || 'myadmintoken'
 const org = process.env.INFLUX_ORG || 'myorganization'
 

@@ -6,10 +6,11 @@ const PORT = process.env.PORT || 9000
 const REDIS_PORT = process.env.REDIS_PORT || 6379
 const REDIS_URL = process.env.REDIS_URL || "redis"
 const client = redis.createClient({
-    legacyMode: true,
-    docket: {
-        port: REDIS_PORT + "/test",
-        host: REDIS_URL
+    //legacyMode: true,
+    socket: {
+        host: "redis" ,
+        port: 6379 ,
+
     }
 });
 

@@ -4,14 +4,14 @@
   "description": "",
   "main": "query,js",
   "scripts": {
-    "start": "node src/query.js"
+    "start": "node src/database.js"
   },
   "type": "module",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.29.0",
     "@influxdata/influxdb-client-apis": "^1.29.0",
     "axios": "^0.27.2",
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "node-cron": "^3.0.2",
     "node-redis": "^0.1.7",
     "redis": "^4.3.1"
