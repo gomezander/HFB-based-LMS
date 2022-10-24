@@ -108,10 +108,11 @@ const fluxObserver = {
 // Use with caution, it copies the whole stream of results into memory.
 
 const client = redis.createClient({
-  legacyMode: true,
-  docket: {
-      port: REDIS_PORT + "/test",
-      host: REDIS_URL
+  //legacyMode: true,
+  socket: {
+      host: REDIS_URL ,
+      port: 6379 ,
+
   }
 });
 
