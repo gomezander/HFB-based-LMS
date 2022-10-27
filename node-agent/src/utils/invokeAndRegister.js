@@ -1,11 +1,12 @@
-import invoke from '../../../blockchain/asset-transfer-basic/application-javascript/invokeAndRegister.js';
+
+'use strict';
+
+const invokeAndRegister = require('../../../blockchain/asset-transfer-basic/application-javascript/invokeAndRegister.js');
 
 async function main(){
 
-    invoke();
-
-
+	invokeAndRegister();
 
 }
-    
+
 main();

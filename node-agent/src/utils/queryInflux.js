@@ -3,7 +3,7 @@
  * Queries a data point in InfluxDB using the Javascript client library with Node.js.
 **/
 
-import { InfluxDB, Point } from '@influxdata/influxdb-client'
+const { InfluxDB, Point } = require('@influxdata/influxdb-client');
 
 /** Environment variables **/
 const url = process.env.INFLUX_URL || 'http://localhost:8086' //change localhost to influxdb when using docker
@@ -24,7 +24,7 @@ const fluxQuery = 'from(bucket: "mybucket") |> range(start: -10s) |> filter(fn: 
 var val;
 
 
-export default async function queryInflux(query){
+module.exports =  async function queryInflux(query){
 
     try{
         

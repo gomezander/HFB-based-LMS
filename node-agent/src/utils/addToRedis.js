@@ -1,14 +1,15 @@
 //Redis Connection
-import express from 'express';
-import redis from 'redis';
-import crypto from 'crypto';
+const express = require('express');
+const redis = require('redis');
+const crypto = require('crypto');
+
 const app = express()
-const PORT = process.env.PORT || 9000
+//const PORT = process.env.PORT || 9000
 const REDIS_PORT = process.env.REDIS_PORT || 6379
 const REDIS_URL = process.env.REDIS_URL || "localhost" //Change localhost to redis when using docker
 
 
-export default async function addToRedis(log) {
+module.exports = async function addToRedis(log) {
 
     try {
 
@@ -23,7 +24,7 @@ export default async function addToRedis(log) {
 
         client.on('connect', () => console.log(`\nRedis is connected on port ${REDIS_PORT}`));
         client.on("error", (error) => console.error(error));
-        app.listen(PORT, () => console.log(`\nServer running on port ${PORT}`));
+        //app.listen(PORT, () => console.log(`\nServer running on port ${PORT}`));
 
         var hash = crypto.createHash('md5').update(log).digest('hex');
         await client.connect();

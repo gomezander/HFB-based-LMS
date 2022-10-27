@@ -11,6 +11,10 @@ networks:
     name: influx-frontend
   postgres:
     external: false
+  fabric:
+    name: fabric_test
+    #external: true
+  
 
 
 services:
@@ -130,9 +134,17 @@ services:
 
   agent:
     profiles: ["node-agent"]
-    build: ./node-agent
+    build: .
     networks:
       - influx
+      - fabric
+  
+  blockhain-setup:
+    profiles: ["bchain-setup"]
+    build: ./blockchain
+    networks:
+      - fabric
+    
 
   postgres:
     container_name: postgres

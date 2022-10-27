@@ -6,6 +6,8 @@ WORKDIR /usr/src/agent-node-influx
 
 COPY package*.json ./
 
+#COPY ../../blockchain/ /usr/src/
+
 RUN npm install
 
 COPY . . 
