@@ -4,7 +4,7 @@
   "description": "",
   "main": "query,js",
   "scripts": {
-    "start": "node node-agent/src/definitiva.js"
+    "start": "node node-agent/src/agent-script.js"
   },
   "dependencies": {
     "@influxdata/influxdb-client": "^1.29.0",

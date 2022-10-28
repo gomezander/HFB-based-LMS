@@ -14,13 +14,9 @@ const id = 'appUser';
 
 var cron = require('node-cron');
 
-
-
-
-
 async function main(){
     let res = await queryInflux(queryFlux);
-    console.log('\nResultado: ', res);
+    //console.log('\nInflux log: ', res);
 
     let key = await addToRedis(res);
 
@@ -28,7 +24,7 @@ async function main(){
     let assetId = Math.floor(Math.random() * 100000) + 1;
     assetId=assetId.toString();
 
-    await invokeBchain();
+    //await invokeBchain();
 
     await addassetBchain(method1, assetId, key, res);
 

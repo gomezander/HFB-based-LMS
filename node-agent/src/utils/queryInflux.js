@@ -51,7 +51,7 @@ module.exports =  async function queryInflux(query){
         const data =  await queryApi.collectRows(query)
         //data.forEach((x) => console.log(JSON.stringify(x)))
         data.forEach((x) => val = (JSON.stringify(x)));
-        console.log(val);
+        //console.log(val);
 
         return val;
     }catch(error){

@@ -1,2 +1,4 @@
-WARNING 2022-10-17 17:24:40,248 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/key-metadata/
-WARNING 2022-10-17 17:24:40,249 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/value-details/
+WARNING 2022-10-28 12:30:12,254 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/value-details/
+WARNING 2022-10-28 12:30:12,263 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/key-metadata/
+WARNING 2022-10-28 13:58:05,606 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/value-details/
+WARNING 2022-10-28 13:58:05,617 django.request Not Found: /api/instance/aa0fc499-6c8d-4979-909f-2242044d3084/key-metadata/

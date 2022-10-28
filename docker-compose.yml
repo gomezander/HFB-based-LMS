@@ -135,9 +135,11 @@ services:
   agent:
     profiles: ["node-agent"]
     build: .
-    networks:
-      - influx
-      - fabric
+    #networks:
+     # - influx
+      #- fabric
+    network_mode: "host"
+
   
   blockhain-setup:
     profiles: ["bchain-setup"]

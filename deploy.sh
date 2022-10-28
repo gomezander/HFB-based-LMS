@@ -7,15 +7,15 @@ while [ $# -gt 0 ] ; do
                 sudo rm -r -f /var/run/shared
                 sudo mkdir -p /var/run/shared
                 sudo chmod -R 777 /var/run/shared/
-                #docker build -t nodeagent -f node-agent/Dockerfile .
+                docker build -t nodeagent -f node-agent/Dockerfile .
                 docker compose build
                 COMPOSE_PROFILES=influx,telegraf docker compose up -d
                 COMPOSE_PROFILES=suricata,grafana,redis docker compose up -d
-                #COMPOSE_PROFILES=node-agent docker compose up
+                COMPOSE_PROFILES=node-agent docker compose up --build --remove-orphans --force-recreate
                 ;;
     -d | --down) 
                 COMPOSE_PROFILES=influx,telegraf,suricata,grafana,redis docker compose down
-                #COMPOSE_PROFILES=node-agent docker compose down
+                COMPOSE_PROFILES=node-agent docker compose down
                 ;;
     #-a | --aarg) A="$2" ;;
     #-b | --barg) B="$2" ;;
