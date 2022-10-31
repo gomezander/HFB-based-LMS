@@ -1,4 +1,10 @@
-# Service with Suricata, Telegraf, InfluxDB and Grafana
+# Design and implementation of a trustworthy industrial log monitoring system based on Hyperledger Fabric Blockchain.
+
+> **Note**
+> 
+> This repository is in developement stage 🛠️
+Developed and supported by @gomezander
+
 
 - [Service with Suricata, Telegraf, InfluxDB and Grafana](#service-with-suricata-telegraf-influxdb-and-grafana)
   - [Versions](#versions)
