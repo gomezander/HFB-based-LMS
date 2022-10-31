@@ -1,15 +1,22 @@
-# Design and implementation of a trustworthy industrial log monitoring system based on Hyperledger Fabric Blockchain.
+# Design and implementation of a trustworthy industrial log monitoring system based on Hyperledger Fabric Blockchain
+
+The aim of the project is to design and implement a log monitoring system that guarantees the immutablity of the logs. To that end, the system will make use of the Hyerledger Fabric Blockchain, as well as many other services.
+
+This repository includes detailed information about the design and implementation of the log monitoring system, as well as the sourcecode of the project and a useguide.
 
 > **Note**
 > 
-> This repository is in developement stage 🛠️
-> 
+> 🛠️ This repository is in developement stage at the moment 🛠️
+
+Developed and supported by [sfl0r3nz05](https://github.com/sfl0r3nz05) and [gomezander](https://github.com/gomezander).
 
 
-Developed and supported by [sfl0r3nz05](https://github.com/sfl0r3nz05) and [gomezander](https://github.com/gomezander)
+## Contents
+- [System Design]
+- [System Implementation]
+- [Setting Up]
 
-
-- [Service with Suricata, Telegraf, InfluxDB and Grafana](#service-with-suricata-telegraf-influxdb-and-grafana)
+- [Design and implementation of a trustworthy industrial log monitoring system based on Hyperledger Fabric Blockchain](#service-with-suricata-telegraf-influxdb-and-grafana)
   - [Versions](#versions)
   - [Pre-requisites](#pre-requisites)
   - [Getting Started](#getting-started)
