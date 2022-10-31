@@ -3,7 +3,10 @@
 > **Note**
 > 
 > This repository is in developement stage 🛠️
-Developed and supported by [@gomezander]
+> 
+
+
+Developed and supported by [sfl0r3nz05](https://github.com/sfl0r3nz05) and [gomezander](https://github.com/gomezander)
 
 
 - [Service with Suricata, Telegraf, InfluxDB and Grafana](#service-with-suricata-telegraf-influxdb-and-grafana)
