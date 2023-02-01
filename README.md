@@ -1,6 +1,19 @@
-# Service with Suricata, Telegraf, InfluxDB and Grafana
+# Design and implementation of a trustworthy industrial log monitoring system based on Hyperledger Fabric Blockchain
 
-- [Service with Suricata, Telegraf, InfluxDB and Grafana](#service-with-suricata-telegraf-influxdb-and-grafana)
+The aim of the project is to design and implement a log monitoring system that guarantees the immutablity of the logs. To that end, the system will make use of the Hyerledger Fabric Blockchain, as well as many other services.
+
+This repository includes detailed information about the design and implementation of the log monitoring system, as well as the sourcecode of the project and a useguide.
+
+> **Note**
+> 
+> 🛠️ This repository is in developement stage at the moment. 🛠️
+
+Developed and supported by [sfl0r3nz05](https://github.com/sfl0r3nz05) and [gomezander](https://github.com/gomezander).
+
+
+## Contents
+
+
   - [Versions](#versions)
   - [Pre-requisites](#pre-requisites)
   - [Getting Started](#getting-started)
@@ -15,6 +28,10 @@
         - [Output configuration](#output-configuration)
     - [Permissions for Socket shared in volume](#permissions-for-socket-shared-in-volume)
     - [Configure InfluxDB](#configure-influxdb)
+  - [Setting Up](#setting-up)
+    - [InfluxDB Setup](#influxdb-setup)
+    - [Telegraf Setup](#telegraf-setup)
+    - [Suricata Setup](#suricata-setup)
   - [How to Start](#how-to-start)
     - [Mapped Ports](#mapped-ports)
     - [Grafana](#grafana)
@@ -41,9 +58,11 @@
 
 ## Getting Started
 
-### Configure suricata
+> **Note**
+> 
+> Suricata, Telegraf and InfluxDB have already been configured. If you dont't want to make changes to any of these services, you can skip directly to [Setting up](#setting-up).
 
-*The following settings have already been made, so they should be followed in case new rules are added or updated.*
+### Configure suricata
 
 1. Download rules from the community:
 
@@ -114,6 +133,33 @@
     ```
 
 #### Configure suricata.yaml
+
+Configure a unix stream as an output to enable communication with Telegraf.
+
+```bash
+# Configure the type of alert (and other) logging you would like.
+outputs:
+  # a line based alerts log similar to Snort's fast.log
+  - fast:
+      enabled: yes
+      filename: fast.log
+      append: yes
+      filetype: regular # 'regular', 'unix_stream' or 'unix_dgram'
+  
+  - eve-log:
+      enabled: yes
+      filetype: unix_stream
+      filename: /var/run/suricata/suricata-command.socket
+      types:
+        - stats:
+            totals: yes       # stats for all threads merged together
+            threads: yes       # per thread stats
+            deltas: yes        # include delta values
+        - alert:
+           enabled: yes
+           payload: yes
+           metadata: yes
+```
 
 ##### Global stats configuration
 
@@ -214,6 +260,8 @@ INFLUXDB_INIT_BUCKET=mybucket
 INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_VLgWrbkENFICiXk87rwB1T7wB8a93VonQ==
 ```
 
+## Setting Up
+
 ### Permissions for Socket shared in volume
 
 1. Give permissions to the shared volume for sockets
@@ -237,6 +285,7 @@ INFLUXDB_INIT_ADMIN_TOKEN=vF2hjj43zMjHTWTkoLeocGrq9VRBZLN-540x5eyVoZ0NlZGJZ5op_V
 ### Configure InfluxDB
 
 ```bash
+# Login credentials can be edited in /influxdb/influxdb.env
 user: admin
 password: admin123456
 ```
@@ -257,7 +306,7 @@ password: admin123456
 
    ![Telegraf Agent](./image/telegraf3.png)
 
-5. Selects metrics and configure dashboard
+5. Select metrics and configure dashboard
 
    ![Telegraf Agent](./image/influxdb.png)
 
